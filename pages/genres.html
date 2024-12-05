@@ -45,7 +45,6 @@
             <button class="genre-filter" data-genre="Детектив">Триллер</button>
             <button class="genre-filter" data-genre="Бестселлер">Фикшн</button>
             <button class="genre-filter" data-genre="Роман">Мистерия</button>
-            <button class="genre-filter" data-genre="Детектив">Литература по саморазвитию</button>
             <button class="genre-filter" data-genre="all">Все</button>
         </div>
     
@@ -75,42 +74,36 @@
     <footer>
     </footer>
     <script>
-document.addEventListener('DOMContentLoaded', () => {
     const buttons = document.querySelectorAll('.genre-filter');
     const books = document.querySelectorAll('.bookcard');
-    const selectedGenres = new Set(); // Хранит выбранные жанры
+    const selectedGenres = new Set();
 
     buttons.forEach(button => {
         button.addEventListener('click', () => {
             const genre = button.dataset.genre;
 
-            // Если "Все", очищаем фильтры
             if (genre === 'all') {
                 selectedGenres.clear();
-                buttons.forEach(btn => btn.classList.remove('selected')); // Убираем стиль с кнопок
-                button.classList.add('selected'); // Добавляем стиль к кнопке "Все"
+                buttons.forEach(btn => btn.classList.remove('selected')); 
+                button.classList.add('selected');
             } else {
                 // Если жанр уже выбран, убираем его
                 if (selectedGenres.has(genre)) {
                     selectedGenres.delete(genre);
-                    button.classList.remove('selected'); // Убираем темно-зеленый стиль
+                    button.classList.remove('selected'); // Убирает стиль
                 } else {
                     selectedGenres.add(genre);
-                    button.classList.add('selected'); // Делаем кнопку темно-зеленой
+                    button.classList.add('selected'); // Добавляет стиль выбранной кнопке
                 }
-                // Убираем стиль с кнопки "Все"
                 document.querySelector('[data-genre="all"]').classList.remove('selected');
             }
 
-            // Применяем фильтр
             books.forEach(book => {
                 const genres = book.dataset.genres.split(', ').map(g => g.trim());
 
-                // Если ни один жанр не выбран, показываем все книги
                 if (selectedGenres.size === 0) {
                     book.classList.add('active');
                 } else {
-                    // Показываем книгу, если она имеет хотя бы один из выбранных жанров
                     const matches = [...selectedGenres].some(genre => genres.includes(genre));
                     if (matches) {
                         book.classList.add('active');
@@ -121,7 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     });
-});
 
 
     </script>
